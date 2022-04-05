@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.Mockito.when;
+
 @ExtendWith(SpringExtension.class)
 public class ClientServiceTests {
     @InjectMocks
@@ -63,8 +65,10 @@ public class ClientServiceTests {
         Mockito.when(clientRepository.save(Mockito.any()))
                 .thenReturn(Client.convert(clientDTO));
 
-        ClientDTO clientReturn = clientService.createClient(clientDTO);
+        ClientDTO clientReturn = clientService.saveClient(clientDTO);
         Assertions.assertEquals("Wesley", clientReturn.getName());
         Assertions.assertEquals("5555", clientReturn.getCpf());
     }
+
+
 }

@@ -39,12 +39,13 @@ public class ClientControllerTests {
 
     @Test
     public void testCreatePessoa() throws Exception {
-        when(clientService.createClient(Mockito.any())).thenReturn(new ClientDTO());
+        when(clientService.saveClient(Mockito.any())).thenReturn(new ClientDTO());
 
         mockMvc.perform(post("/client/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"nome\": \"Eduardo\"}"))
                 .andExpect(status().isCreated());
     }
+
 
 }

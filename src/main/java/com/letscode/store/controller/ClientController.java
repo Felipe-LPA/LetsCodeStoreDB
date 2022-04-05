@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/client")
@@ -25,7 +27,7 @@ public class ClientController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/")
-    public void saveClient(@RequestBody ClientDTO clientDTO){
+    public void saveClient(@RequestBody @Valid ClientDTO clientDTO){
         clientService.saveClient(clientDTO);
     }
 
