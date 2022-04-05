@@ -24,6 +24,11 @@ public class ClientService {
         return clientRepository.findAll(pageable).map(ClientDTO::convert);
     }
 
+    public ClientDTO createClient(ClientDTO client) {
+        Client clientBD = clientRepository.save(Client.convert(client));
+        return ClientDTO.convert(clientBD);
+    }
+
     public void saveClient(ClientDTO clientDTO) {
         clientRepository.save(Client.convert(clientDTO));
     }
