@@ -1,6 +1,7 @@
 package com.letscode.store.model;
 
 
+import com.letscode.store.dto.UserDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,4 +24,11 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
+    public static User convert(UserDTO dto) {
+        User user = new User();
+        user.setEnabled(dto.getEnabled());
+        user.setPassword(dto.getPassword());
+        user.setUserName(dto.getUserName());
+        return user;
+    }
 }
