@@ -24,8 +24,8 @@ public class ClientService {
         return clientRepository.findAll(pageable).map(ClientDTO::convert);
     }
 
-    public void saveClient(ClientDTO clientDTO) {
-        clientRepository.save(Client.convert(clientDTO));
+    public ClientDTO saveClient(ClientDTO clientDTO) {
+        return ClientDTO.convert(clientRepository.save(Client.convert(clientDTO)));
     }
 
     public Client findByCpf(String cpf) throws NotFoundException {
