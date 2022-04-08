@@ -19,7 +19,7 @@ public class ProductController {
     @Autowired
     private final ProductService productService;
 
-    @GetMapping("/")
+    @GetMapping
     public Page<ProductDTO> listAllProducts(
             @QuerydslPredicate(root = Product.class) Predicate predicate,
             Pageable pageable
@@ -28,10 +28,19 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping
     public void saveProduct(@RequestBody ProductDTO productDTO){
         productService.saveProduct(productDTO);
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PatchMapping
+    public void updateProduct(@RequestBody ProductDTO productDTO){ productService.updateProduct(productDTO);}
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/{productCode}")
+    public void deleteProduct(@PathVariable Integer productCode){
+        productService.deleteProduct(productCode);
+    }
 
 }

@@ -46,7 +46,7 @@ public class PurchaseService {
             requestPurchaseDTO.getProducts().forEach((product -> {
                 if(!productsToSave.contains(product)) notHave.add(Integer.toString(product.getProductCode()));
             }));
-            throw new NotFoundException("A Lista de Produtos(" + notHave + ") ");
+            throw new NotFoundException("Não há quantidade suficiente dos produtos a seguir: " + notHave);
         };
 
         Purchase purchase = purchaseRepository.save(Purchase.convert(client, LocalDateTime.now(), getTotalPurchased(productsToSave, requestPurchaseDTO.getProducts())));

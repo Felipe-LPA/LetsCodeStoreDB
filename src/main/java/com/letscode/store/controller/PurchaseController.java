@@ -22,14 +22,14 @@ public class PurchaseController {
     @Autowired
     private final PurchaseService purchaseService;
 
-    @GetMapping("/")
+    @GetMapping
     public Page<ResponsePurchaseDTO> listAllPurchases(@QuerydslPredicate(root = Purchase.class) Predicate predicate,
                                                       Pageable pageable){
         return purchaseService.listAll(predicate, pageable);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping
     public void savePurchase(@RequestBody RequestPurchaseDTO requestPurchaseDTO) throws NotFoundException {
         purchaseService.savePurchase(requestPurchaseDTO);
     }

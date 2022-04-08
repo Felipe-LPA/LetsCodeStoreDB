@@ -28,7 +28,10 @@ public class UserService {
     public void createUser(UserDTO userDTO) {
 
         if (userDTO.getPassword() == null) {
-            throw new InvalidValueFieldException();
+            throw new InvalidValueFieldException("Password não pode ser nulo!");
+        }
+        if (userRepository.findByUserName(userDTO.getUserName()).isPresent()) {
+            throw new InvalidValueFieldException("User já existe!");
         }
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         User user = User.convert(userDTO);

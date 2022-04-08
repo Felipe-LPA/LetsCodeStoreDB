@@ -1,6 +1,7 @@
 package com.letscode.store.config;
 
 import com.letscode.store.exceptions.ErrorValidation;
+import com.letscode.store.exceptions.InvalidValueFieldException;
 import com.letscode.store.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,17 @@ public class ErrorHandle {
         return  errors;
     }
 
+
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public String NotFoundHandler(NotFoundException exception){
         return exception.getMessage();
     }
+
+    @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler(InvalidValueFieldException.class)
+    public String InvalidValueField(InvalidValueFieldException exception){
+        return exception.getMessage();
+    }
+
 }

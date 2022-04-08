@@ -2,7 +2,9 @@ package com.letscode.store.service;
 
 import com.letscode.store.dto.ProductDTO;
 import com.letscode.store.dto.PurchaseSaveProductDTO;
+import com.letscode.store.exceptions.InvalidValueFieldException;
 import com.letscode.store.exceptions.NotFoundException;
+import com.letscode.store.model.Client;
 import com.letscode.store.model.Product;
 import com.letscode.store.repository.ProductRepository;
 import com.querydsl.core.types.Predicate;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +30,17 @@ public class ProductService {
     }
 
     public void saveProduct(ProductDTO productDTO) {
+        Optional<Product> product = productRepository.findByProductCode(productDTO.getProductCode());
+        if(product.isPresent()) throw new InvalidValueFieldException("Produto já existe");
         productRepository.save(Product.convert(productDTO));
+    }
+
+    public void updateProduct(ProductDTO productDTO) {
+        Optional<Product> product = productRepository.findByProductCode(productDTO.getProductCode());
+        if(product.isEmpty()) throw new InvalidValueFieldException("Produto não existe");
+        product.get().setQuantity(productDTO.getQuantity());
+        product.get().setPrice(productDTO.getPrice());
+        productRepository.save(product.get());
     }
 
     public List<Product> getProductsToPurchase(List<PurchaseSaveProductDTO> purchaseSaveProductDTOS){
@@ -59,4 +72,9 @@ public class ProductService {
 
     }
 
+    public void deleteProduct(Integer productCode) {
+        Optional<Product> product = productRepository.findByProductCode(productCode);
+        if(product.isEmpty()) throw new InvalidValueFieldException("Produto não existe");
+        productRepository.delete(product.get());
+    }
 }

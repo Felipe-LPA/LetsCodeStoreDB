@@ -25,12 +25,6 @@ public class Purchase {
     @JoinColumn(name = "id_client")
     private Client client;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "purchase_product",
-//            joinColumns = { @JoinColumn(name = "id_purchase")},
-//            inverseJoinColumns = { @JoinColumn(name = "id_product")}
-//    )
     @OneToMany(mappedBy = "purchase")
     private List<PurchaseProduct> products;
 

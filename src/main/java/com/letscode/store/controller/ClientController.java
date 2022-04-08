@@ -20,13 +20,13 @@ public class ClientController {
     @Autowired
     private final ClientService clientService;
 
-    @GetMapping("/")
+    @GetMapping
     public Page<ClientDTO> listAllClients(Pageable pageable){
         return clientService.listAll(pageable);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/")
+    @PostMapping
     public void saveClient(@RequestBody @Valid ClientDTO clientDTO){
         clientService.saveClient(clientDTO);
     }

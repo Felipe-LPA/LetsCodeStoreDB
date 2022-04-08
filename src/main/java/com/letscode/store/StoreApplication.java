@@ -24,26 +24,6 @@ public class StoreApplication {
 								  AuthorityRepository authorityRepository) {
 		return (args) -> {
 
-			User user = new User();
-			user.setUserName("admin");
-			user.setPassword("{bcrypt}" + new BCryptPasswordEncoder().encode("admin"));
-			user.setEnabled(true);
-
-			userRepository.save(user);
-
-			Authority authority = new Authority();
-			authority.setAuthorityKey(new AuthorityKey(user.getUserName(), "ROLE_ADMIN"));
-			authority.setUser(user);
-
-			authorityRepository.save(authority);
-
-			authority = new Authority();
-
-			authority.setAuthorityKey(new AuthorityKey(user.getUserName(), "ROLE_DEVELOPER"));
-			authority.setUser(user);
-			authorityRepository.save(authority);
-
-
 
 		};
 	}

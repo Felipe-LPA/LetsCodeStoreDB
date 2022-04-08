@@ -1,6 +1,7 @@
 package com.letscode.store.service;
 
 import com.letscode.store.dto.ClientDTO;
+import com.letscode.store.exceptions.InvalidValueFieldException;
 import com.letscode.store.exceptions.NotFoundException;
 import com.letscode.store.model.Client;
 import com.letscode.store.repository.ClientRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @Service
@@ -25,10 +27,13 @@ public class ClientService {
     }
 
     public ClientDTO saveClient(ClientDTO clientDTO) {
+        Optional<Client> client = clientRepository.findByCpf(clientDTO.getCpf());
+        if(client.isPresent()) throw new InvalidValueFieldException("Cliente já existe");
+
         return ClientDTO.convert(clientRepository.save(Client.convert(clientDTO)));
     }
 
     public Client findByCpf(String cpf) throws NotFoundException {
-        return clientRepository.findByCpf(cpf).orElseThrow(()-> new NotFoundException("Cliente"));
+        return clientRepository.findByCpf(cpf).orElseThrow(()-> new NotFoundException("Cliente não encontrado."));
     }
 }
